@@ -13,12 +13,11 @@ public class AddItemActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_dialog);
 		
-		//Ôö¼Ó°´Å¥
-        findViewById(R.id.confirmAdd).setOnClickListener(new View.OnClickListener() {
+		//Add item button
+		findViewById(R.id.confirmAdd).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				String itemName = ((EditText)AddItemActivity.this.findViewById(R.id.itemTitle)).getText().toString();
