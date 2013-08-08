@@ -34,7 +34,7 @@ public class BringActivity extends Activity {
         addDefaultItems();
         addViews();
         
-        //÷ÿ÷√∞¥≈•
+        //Unset all the checkbox items
         findViewById(R.id.reset).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -47,7 +47,7 @@ public class BringActivity extends Activity {
 			}
 		});
         
-        //‘ˆº”∞¥≈•
+        //Add an item
         findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -56,6 +56,7 @@ public class BringActivity extends Activity {
 			}
 		});
         
+        //Exit
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -66,25 +67,26 @@ public class BringActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+	    super.onResume();
+	    
+	    //Keep the screen on
 		if(mWakeLock==null) {
 			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE); 
-	        mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "XYTEST"); 
+	        mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getSimpleName()); 
 	        mWakeLock.acquire(); 
 		}
-		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
+	    //Release the screen on lock
 		mWakeLock.release();
 		mWakeLock = null;
 		super.onPause();
 	}
 
 	private void addViews() {
-		// TODO Auto-generated method stub
+	    //
 		for(int i=0; i<mItems.size(); i++){
 			addCheckBox(mItems.get(i));
 		}
@@ -120,7 +122,6 @@ public class BringActivity extends Activity {
 	private void addDefaultItems() {
         SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);  
         String strItems = sp.getString("ITEMS", "");  
-        //‘⁄EditText÷–œ‘ æ±∏Õ¸¬ºƒ⁄»›  
         String[] arrItems = strItems.split("&&");
         for(String str:arrItems) {
         	if(str!=null&&!str.trim().equals("")) {
@@ -132,7 +133,6 @@ public class BringActivity extends Activity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
 		if(requestCode==0&&resultCode==0) {
 			String itemName = data.getStringExtra("ITEM_NAME");
 			if(mItems.contains(itemName)) {
@@ -141,16 +141,15 @@ public class BringActivity extends Activity {
 			}
 			mItems.add(itemName);
 			addCheckBox(itemName);
-			//ªÒµ√SharedPreferences µ¿˝  
+			//ÔøΩÔøΩÔøΩSharedPreferences µÔøΩÔøΩ  
 	        SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);  
-	        //¥”SharedPreferencesªÒµ√±∏Õ¸¬ºµƒƒ⁄»›  
+	        //ÔøΩÔøΩSharedPreferencesÔøΩÔøΩ√±ÔøΩÔøΩÔøΩ¬ºÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ  
 	        String strItems = sp.getString("ITEMS", "");  
-			//ªÒµ√±‡º≠∆˜  
+			//ÔøΩÔøΩ√±‡º≠ÔøΩÔøΩ  
 	        SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit(); 
-	        //Ω´EditText÷–µƒŒƒ±æƒ⁄»›ÃÌº”µΩ±‡º≠∆˜  
+	        //ÔøΩÔøΩEditTextÔøΩ–µÔøΩÔøΩƒ±ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”µÔøΩÔøΩ‡º≠ÔøΩÔøΩ  
 	        strItems = strItems+"&&"+itemName;
 	        editor.putString("ITEMS", strItems);
-	        //Ã·Ωª±‡º≠∆˜ƒ⁄»›  
 	        editor.commit(); 
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -159,13 +158,11 @@ public class BringActivity extends Activity {
 	private View.OnClickListener mCBLister = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			v.setEnabled(false);
 		}
 	};
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		if(mWakeLock!=null) {
 			mWakeLock.release();
 		}
