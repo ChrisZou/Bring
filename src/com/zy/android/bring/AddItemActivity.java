@@ -9,39 +9,56 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 
-public class AddItemActivity extends Activity{
+public class AddItemActivity extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_dialog);
-		
-		//Add item button
-		findViewById(R.id.confirmAdd).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String itemName = ((EditText)AddItemActivity.this.findViewById(R.id.itemTitle)).getText().toString();
-				Intent i = new Intent();
-				i.putExtra("ITEM_NAME", itemName);
-				AddItemActivity.this.setResult(0, i);
-				AddItemActivity.this.finish();
-			}
-		});
-        
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_dialog);
+
+        initViews();
+        setWindowWidth();
+    }
+
+    private void initViews() {
+        // Add item button
+        findViewById(R.id.confirmAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem();
+            }
+        });
+
         findViewById(R.id.cancelAdd).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				AddItemActivity.this.setResult(-1);
-				AddItemActivity.this.finish();
-			}
-		});
-        
+            @Override
+            public void onClick(View v) {
+                cancelAdding();
+            }
+        });
+    }
+
+    private void setWindowWidth() {
         WindowManager wm = getWindowManager();
         Display d = wm.getDefaultDisplay();
         LayoutParams p = getWindow().getAttributes();
-        p.width = (int)(d.getWidth()*0.7);
+        p.width = (int) (d.getWidth() * 0.8);
         getWindow().setAttributes(p);
-	}
-	
+    }
+
+    private void addItem() {
+        String itemName = ((EditText) findViewById(R.id.itemTitle)).getText().toString().trim();
+        if (itemName.length() == 0) {
+            return;
+        }
+
+        Intent i = new Intent();
+        i.putExtra("ITEM_NAME", itemName);
+        setResult(RESULT_OK, i);
+        finish();
+    }
+
+    private void cancelAdding() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
 }
