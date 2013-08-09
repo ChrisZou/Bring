@@ -104,7 +104,6 @@ public class BringActivity extends Activity {
         String[] arrItems = strItems.split("&&");
         for(String str:arrItems) {
         	if(str!=null&&!str.trim().equals("")) {
-        		Log.d("zy", "item:"+str.length());
         		mItems.add(str);
         	}
         }
