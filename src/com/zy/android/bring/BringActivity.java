@@ -37,9 +37,9 @@ public class BringActivity extends Activity {
 	private void initViews() {
 	    mItemList = (LinearLayout)findViewById(R.id.itemList);
 		//Unset all the checkbox items
-        findViewById(R.id.reset).setOnClickListener(mClickListener);
-        findViewById(R.id.add).setOnClickListener(mClickListener);
-        findViewById(R.id.close).setOnClickListener(mClickListener);
+        findViewById(R.id.main_reset).setOnClickListener(mClickListener);
+        findViewById(R.id.main_add).setOnClickListener(mClickListener);
+        findViewById(R.id.main_close).setOnClickListener(mClickListener);
 	}
 
 	@Override
@@ -153,11 +153,11 @@ public class BringActivity extends Activity {
         @Override
         public void onClick(View v) {
             switch(v.getId()) {
-            case R.id.add:
+            case R.id.main_add:
                 addItem(); break;
-            case R.id.close:
+            case R.id.main_close:
                 finish(); break;
-            case R.id.reset:
+            case R.id.main_reset:
                 resetItems();
                 break;
             }

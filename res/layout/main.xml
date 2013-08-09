@@ -15,19 +15,19 @@
 	    android:layout_alignParentBottom="true"
 	    android:orientation="horizontal" >
 	    <Button
-	        android:id="@+id/add"
+	        android:id="@+id/main_add"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/add" />
 	    <Button
-	        android:id="@+id/reset"
+	        android:id="@+id/main_reset"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/reset" />
 	    <Button
-	        android:id="@+id/close"
+	        android:id="@+id/main_close"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
