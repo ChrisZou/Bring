@@ -94,7 +94,6 @@ public class BringActivity extends Activity {
         editor.putString("ITEMS", sbItems.toString());
         editor.commit();
         
-        
         mItems.remove(title);
         mItemList.removeView(checkBox);
 	}
