@@ -52,7 +52,7 @@ public class AddItemActivity extends Activity {
         }
 
         Intent i = new Intent();
-        i.putExtra("ITEM_NAME", itemName);
+        i.putExtra(Const.EXTRA_STRING_ITEM_TITLE, itemName);
         setResult(RESULT_OK, i);
         finish();
     }
