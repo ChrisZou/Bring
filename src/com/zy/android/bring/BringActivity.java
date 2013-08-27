@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -21,13 +20,20 @@ import android.widget.Toast;
 public class BringActivity extends Activity {
 	
 	private List<String> mItems = new ArrayList<String>();
-	private LinearLayout mItemList = null;
+	private LinearLayout mViewList = null;
 	private PowerManager.WakeLock mWakeLock;
+	
+	private static final String ITEM_SPLITER = "::";
+	private static final String PREF_STRING_ITEM_NAME = "ITEMS";
+	
+	private SharedPreferences mPreferences;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         
         initViews();
         addDefaultItems();
@@ -35,7 +41,7 @@ public class BringActivity extends Activity {
     }
 	
 	private void initViews() {
-	    mItemList = (LinearLayout)findViewById(R.id.itemList);
+	    mViewList = (LinearLayout)findViewById(R.id.itemList);
 		//Unset all the checkbox items
         findViewById(R.id.main_reset).setOnClickListener(mClickListener);
         findViewById(R.id.main_add).setOnClickListener(mClickListener);
@@ -73,36 +79,32 @@ public class BringActivity extends Activity {
 		cb.setText(title);
 		cb.setOnClickListener(mCBLister);
 		cb.setOnLongClickListener(mLongClickListener);
-		mItemList.addView(cb);
+		mViewList.addView(cb);
 	}
 	
 	private OnLongClickListener mLongClickListener = new OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             removeItem((CheckBox)v);
-            return false;
+            return true;
         }
     };
+    
 	private void removeItem(CheckBox checkBox) {
         //Remove the item from shared preference
         String title = checkBox.getText().toString();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this); 
-        StringBuilder sbItems = new StringBuilder(sp.getString("ITEMS", ""));
+        StringBuilder sbItems = new StringBuilder(mPreferences.getString(PREF_STRING_ITEM_NAME, ""));
         int start = sbItems.indexOf(title)-2;
         sbItems.delete(start, start+title.length()+2);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("ITEMS", sbItems.toString());
-        editor.commit();
-        
+        mPreferences.edit().putString("ITEMS", sbItems.toString()).commit();
         
         mItems.remove(title);
-        mItemList.removeView(checkBox);
+        mViewList.removeView(checkBox);
 	}
 
 	private void addDefaultItems() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String strItems = sp.getString("ITEMS", "");  
-        String[] arrItems = strItems.split("&&");
+        String strItems = mPreferences.getString(PREF_STRING_ITEM_NAME, "");  
+        String[] arrItems = strItems.split(ITEM_SPLITER);
         for(String str:arrItems) {
         	if(str!=null&&!str.trim().equals("")) {
         		mItems.add(str);
@@ -124,10 +126,10 @@ public class BringActivity extends Activity {
 			addCheckBox(itemName);
 			
 			//Save to Preference
-	        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-	        String strItems = sp.getString("ITEMS", "");  
-	        strItems = strItems+"&&"+itemName;
-	        sp.edit().putString("ITEMS", strItems).commit();
+	        String strItems = mPreferences.getString(PREF_STRING_ITEM_NAME, "");  
+	        strItems = strItems+ITEM_SPLITER+itemName;
+	        
+	        mPreferences.edit().putString(PREF_STRING_ITEM_NAME, strItems).commit();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -141,9 +143,9 @@ public class BringActivity extends Activity {
 	 * Enable and uncheck all the items
 	 */
 	private void resetItems() {
-        int childCount = mItemList.getChildCount();
+        int childCount = mViewList.getChildCount();
         for(int i=0; i<childCount; i++) {
-            CheckBox cb = (CheckBox)mItemList.getChildAt(i);
+            CheckBox cb = (CheckBox)mViewList.getChildAt(i);
             cb.setEnabled(true);
             cb.setChecked(false);
         }
