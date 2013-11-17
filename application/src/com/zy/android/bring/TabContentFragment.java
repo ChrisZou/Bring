@@ -1,23 +1,27 @@
 package com.zy.android.bring;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Toast;
+
+import com.zy.android.bring.model.ListModel;
 
 public class TabContentFragment extends Fragment implements OnItemLongClickListener, OnItemClickListener {
+    public static final int REQUEST_ADD_ITEM = 0;
 	private BringList mList;
 	private BringAdapter mAdapter;
 	public TabContentFragment() {
@@ -66,11 +70,9 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mList.remove(pos);
-
 				// Save to Preference
-				String items = TextUtils.join(BringActivity.ITEM_SPLITER, mList);
-				PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-						.putString(BringActivity.PREF_STRING_LIST_ + mList.getName(), items).commit();
+				ListModel.getInstance(getActivity()).saveList(mList);
+
 				mAdapter.notifyDataSetChanged();
 			}
 		});
@@ -78,27 +80,50 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		remove(position);
-		return false;
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		CheckBox cbBox = (CheckBox) view.findViewById(R.id.bring_list_item_checkbox);
+		cbBox.toggle();
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		CheckBox cbBox = (CheckBox)view.findViewById(R.id.bring_list_item_checkbox);
-		cbBox.toggle();
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+		remove(position);
+		return true;
 	}
-	
-	
-	
-	
-	
-	
 
-	private class BringAdapter extends BaseAdapter {
+	public void addItem() {
+		Intent intent = new Intent(getActivity(), PromptDialog_.class);
+		intent.putExtra(Const.Extras.EXTRA_STRING_TITLE, "添加项目");
+		startActivityForResult(intent, TabContentFragment.REQUEST_ADD_ITEM);
+	}
 
-		BringList mList;
-		Context mContext;
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ADD_ITEM && resultCode == Activity.RESULT_OK) {
+            String itemName = data.getStringExtra(PromptDialog.EXTRA_RESULT);
+            if (mList.contains(itemName)) {
+                Toast.makeText(this.getActivity(), "Item " + itemName + " already exists!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mList.add(itemName);
+			ListModel.getInstance(getActivity()).saveList(mList);
+
+			mAdapter.notifyDataSetChanged();
+        } 
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+
+
+
+
+
+	private static class BringAdapter extends BaseAdapter {
+
+		private BringList mList;
+		private Context mContext;
 
 		public BringAdapter(Context context, BringList list) {
 			mList = list;
@@ -126,7 +151,7 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.bring_list_item, null);
 			}
 			CheckBox cBox = (CheckBox) convertView.findViewById(R.id.bring_list_item_checkbox);
-			cBox.setText(mList.get(position).toString());
+			cBox.setText(mList.get(position));
 			return convertView;
 		}
 

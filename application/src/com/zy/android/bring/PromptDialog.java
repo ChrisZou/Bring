@@ -3,12 +3,13 @@ package com.zy.android.bring;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.View;
-import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EActivity;
+
+@EActivity
 public class PromptDialog extends Activity {
 	
 	public static final String EXTRA_TITLE = "extra_title";
@@ -19,8 +20,6 @@ public class PromptDialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.prompt_dialog);
 
-        initViews();
-        
         String title = getIntent().getStringExtra(Const.Extras.EXTRA_STRING_TITLE);
         if(title!=null) {
         	setTitle(title);
@@ -28,32 +27,14 @@ public class PromptDialog extends Activity {
         setWindowWidth();
     }
 
-    private void initViews() {
-        // Add item button
-        findViewById(R.id.prompt_dialog_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addItem();
-            }
-        });
-
-        findViewById(R.id.prompt_dialog_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelAdding();
-            }
-        });
-    }
-
     private void setWindowWidth() {
-        WindowManager wm = getWindowManager();
-        Display d = wm.getDefaultDisplay();
         LayoutParams p = getWindow().getAttributes();
-        p.width = (int) (d.getWidth() * 0.8);
+		p.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.8);
         getWindow().setAttributes(p);
     }
 
-    private void addItem() {
+    @Click(R.id.prompt_dialog_ok)
+	void onOk() {
         String itemName = ((EditText) findViewById(R.id.itemTitle)).getText().toString().trim();
         if (itemName.length() == 0) {
             return;
@@ -65,7 +46,8 @@ public class PromptDialog extends Activity {
         finish();
     }
 
-    private void cancelAdding() {
+	@Click(R.id.prompt_dialog_cancel)
+    void cancelAdding() {
         setResult(RESULT_CANCELED);
         finish();
     }

@@ -9,17 +9,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import com.googlecode.androidannotations.api.SdkVersionHelper;
-import com.viewpagerindicator.TabPageIndicator;
 import com.zy.android.bring.R.id;
 
-public final class BringActivity_
-    extends BringActivity
+public final class PromptDialog_
+    extends PromptDialog
 {
 
 
@@ -33,17 +29,15 @@ public final class BringActivity_
     }
 
     private void afterSetContentView_() {
-        mIndicator = ((TabPageIndicator) findViewById(id.main_indicator));
-        mPager = ((ViewPager) findViewById(id.main_pager));
         {
-            View view = findViewById(id.main_add_list);
+            View view = findViewById(id.prompt_dialog_ok);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 
 
                     @Override
                     public void onClick(View view) {
-                        BringActivity_.this.addList();
+                        PromptDialog_.this.onOk();
                     }
 
                 }
@@ -51,36 +45,20 @@ public final class BringActivity_
             }
         }
         {
-            View view = findViewById(id.main_close);
+            View view = findViewById(id.prompt_dialog_cancel);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 
 
                     @Override
                     public void onClick(View view) {
-                        BringActivity_.this.exit();
+                        PromptDialog_.this.cancelAdding();
                     }
 
                 }
                 );
             }
         }
-        {
-            View view = findViewById(id.main_add_item);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        BringActivity_.this.addItem();
-                    }
-
-                }
-                );
-            }
-        }
-        loadItems();
     }
 
     @Override
@@ -101,16 +79,8 @@ public final class BringActivity_
         afterSetContentView_();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (((SdkVersionHelper.getSdkInt()< 5)&&(keyCode == KeyEvent.KEYCODE_BACK))&&(event.getRepeatCount() == 0)) {
-            onBackPressed();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    public static BringActivity_.IntentBuilder_ intent(Context context) {
-        return new BringActivity_.IntentBuilder_(context);
+    public static PromptDialog_.IntentBuilder_ intent(Context context) {
+        return new PromptDialog_.IntentBuilder_(context);
     }
 
     public static class IntentBuilder_ {
@@ -120,14 +90,14 @@ public final class BringActivity_
 
         public IntentBuilder_(Context context) {
             context_ = context;
-            intent_ = new Intent(context, BringActivity_.class);
+            intent_ = new Intent(context, PromptDialog_.class);
         }
 
         public Intent get() {
             return intent_;
         }
 
-        public BringActivity_.IntentBuilder_ flags(int flags) {
+        public PromptDialog_.IntentBuilder_ flags(int flags) {
             intent_.setFlags(flags);
             return this;
         }

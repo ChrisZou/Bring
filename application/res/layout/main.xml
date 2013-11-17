@@ -3,25 +3,19 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <FrameLayout android:id="@+id/fragment_content"
-                 android:layout_width="match_parent"
-                 android:layout_height="0dip"
-                 android:layout_weight="1" />
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal" >
-	    <Button
-	        android:id="@+id/main_add_item"
-	        style="@style/bottom_button"
-	        android:text="@string/add" />
-	    <Button
-	        android:id="@+id/main_add_list"
-	        style="@style/bottom_button"
-	        android:text="@string/add_list" />
-	    <Button
-	        android:id="@+id/main_close"
-	        style="@style/bottom_button"
-	        android:text="@string/close" />
-	</LinearLayout>
+
+    <com.viewpagerindicator.TabPageIndicator
+        android:id="@+id/main_indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <include layout="@layout/bottom_action"/>
+
 </LinearLayout>

@@ -12,14 +12,15 @@
         android:allowBackup="true" >
         <activity
             android:name=".BringActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/Theme.PageIndicatorDefaults" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".PromptDialog"
+            android:name=".PromptDialog_"
             android:label="@string/add_item"
             android:windowSoftInputMode="stateVisible"
             android:theme="@android:style/Theme.Dialog">

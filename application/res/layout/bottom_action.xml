@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/main_add_item"
+        style="@style/bottom_button"
+        android:text="@string/add" />
+
+    <Button
+        android:id="@+id/main_add_list"
+        style="@style/bottom_button"
+        android:text="@string/add_list" />
+
+    <Button
+        android:id="@+id/main_close"
+        style="@style/bottom_button"
+        android:text="@string/close" />
+
+</LinearLayout>
