@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.zy.android.bring.BringList;
+import com.zy.android.bring.utils.L;
 
 public class ListModel {
 
@@ -52,6 +53,20 @@ public class ListModel {
 		return mLists;
 	}
 	
+	public void addList(String name) {
+		if (hasList(name)) {
+			return;
+		}
+
+		mLists.add(new BringList(name));
+		saveLists();
+	}
+
+	private void saveLists() {
+		String lists = TextUtils.join(ITEM_SPLITER, mLists);
+		mPreferences.edit().putString(PREF_STRING_LISTS, lists).commit();
+	}
+
 	public BringList getList(String name){
         String strItems = mPreferences.getString(PREF_STRING_LIST_+name, "");
         String[] arrItems = strItems.split(ITEM_SPLITER);
@@ -77,5 +92,6 @@ public class ListModel {
 	public void saveList(BringList list) {
 		String items = TextUtils.join(ITEM_SPLITER, list);
 		mPreferences.edit().putString(PREF_STRING_LIST_ + list.getName(), items).commit();
+		L.l("save list");
 	}
 }

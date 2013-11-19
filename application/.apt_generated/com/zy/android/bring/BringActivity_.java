@@ -36,21 +36,6 @@ public final class BringActivity_
         mIndicator = ((TabPageIndicator) findViewById(id.main_indicator));
         mPager = ((ViewPager) findViewById(id.main_pager));
         {
-            View view = findViewById(id.main_add_list);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        BringActivity_.this.addList();
-                    }
-
-                }
-                );
-            }
-        }
-        {
             View view = findViewById(id.main_close);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
@@ -74,6 +59,21 @@ public final class BringActivity_
                     @Override
                     public void onClick(View view) {
                         BringActivity_.this.addItem();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = findViewById(id.main_add_list);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        BringActivity_.this.addList();
                     }
 
                 }

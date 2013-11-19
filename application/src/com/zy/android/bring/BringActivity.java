@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.viewpagerindicator.TabPageIndicator;
 import com.zy.android.bring.model.ListModel;
-import com.zy.android.bring.utils.L;
 
 @EActivity
 public class BringActivity extends FragmentActivity {
@@ -53,7 +51,7 @@ public class BringActivity extends FragmentActivity {
     
     @Click(R.id.main_add_list)
     void addList() {
-    	Intent intent = new Intent(BringActivity.this, PromptDialog.class);
+		Intent intent = new Intent(BringActivity.this, PromptDialog_.class);
     	intent.putExtra(Const.Extras.EXTRA_STRING_TITLE, "添加列表");
         startActivityForResult(intent, REQUEST_ADD_LIST);
     }
@@ -73,7 +71,6 @@ public class BringActivity extends FragmentActivity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	L.l("main result");
 		if (requestCode == REQUEST_ADD_LIST && resultCode == RESULT_OK) {
             String listName= data.getStringExtra(PromptDialog.EXTRA_RESULT);
             if (mLists.contains(listName)) {
@@ -81,13 +78,10 @@ public class BringActivity extends FragmentActivity {
                 return;
             }
 
-            // Add an item to the page
-            BringList newList = new BringList(listName);
-            mLists.add(newList);
-
-            // Save to Preference
-            String lists = TextUtils.join(ITEM_SPLITER, mLists);
-            mPreferences.edit().putString(PREF_STRING_LISTS, lists).commit();
+			ListModel.getInstance(this).addList(listName);
+			mAdapter.addList(ListModel.getInstance(getApplicationContext()).getList(listName));
+			mPager.setCurrentItem(mAdapter.getCount() - 1);
+			mIndicator.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -97,13 +91,25 @@ public class BringActivity extends FragmentActivity {
     class BringListAdapter extends FragmentPagerAdapter {
 
 		List<TabContentFragment> fragments;
-        public BringListAdapter(android.support.v4.app.FragmentManager fm) {
+
+		public BringListAdapter(android.support.v4.app.FragmentManager fm) {
 			super(fm);
 
 			fragments = new ArrayList<TabContentFragment>();
 			for(BringList list:mLists) {
 				fragments.add(TabContentFragment.newInstance(list));
 			}
+
+		}
+
+		public void addList(BringList list) {
+			fragments.add(TabContentFragment.newInstance(list));
+			notifyDataSetChanged();
+		}
+
+		public void removeList(int index) {
+			fragments.remove(index);
+			notifyDataSetChanged();
 		}
 
 		@Override

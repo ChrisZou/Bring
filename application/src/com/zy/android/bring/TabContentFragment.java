@@ -108,7 +108,6 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 
             mList.add(itemName);
 			ListModel.getInstance(getActivity()).saveList(mList);
-
 			mAdapter.notifyDataSetChanged();
         } 
 		super.onActivityResult(requestCode, resultCode, data);
