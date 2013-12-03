@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <com.mobeta.android.dslv.DragSortListView
         xmlns:dslv="http://schemas.android.com/res/com.mobeta.android.demodslv"
-        android:id="@+id/main_listview"
+        android:id="@+id/sort_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
@@ -17,6 +18,6 @@
         dslv:max_drag_scroll_speed="0.5"
         dslv:slide_shuffle_speed="0.3"
         dslv:track_drag_sort="false"
-        dslv:drag_start_mode="onLongPress"
         dslv:use_default_controller="false" />
+
 </LinearLayout>

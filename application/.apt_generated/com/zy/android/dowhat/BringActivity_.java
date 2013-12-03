@@ -3,7 +3,7 @@
 //
 
 
-package com.zy.android.bring;
+package com.zy.android.dowhat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,11 +12,11 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
 import com.viewpagerindicator.TabPageIndicator;
-import com.zy.android.bring.R.id;
+import com.zy.android.dowhat.R.id;
 
 public final class BringActivity_
     extends BringActivity
@@ -33,53 +33,9 @@ public final class BringActivity_
     }
 
     private void afterSetContentView_() {
-        mIndicator = ((TabPageIndicator) findViewById(id.main_indicator));
         mPager = ((ViewPager) findViewById(id.main_pager));
-        {
-            View view = findViewById(id.main_close);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        BringActivity_.this.exit();
-                    }
-
-                }
-                );
-            }
-        }
-        {
-            View view = findViewById(id.main_add_item);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        BringActivity_.this.addItem();
-                    }
-
-                }
-                );
-            }
-        }
-        {
-            View view = findViewById(id.main_add_list);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        BringActivity_.this.addList();
-                    }
-
-                }
-                );
-            }
-        }
+        mIndicator = ((TabPageIndicator) findViewById(id.main_indicator));
+        mAddEdit = ((EditText) findViewById(id.main_add_edit));
         loadItems();
     }
 

@@ -1,4 +1,4 @@
-package com.zy.android.bring;
+package com.zy.android.dowhat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,25 +15,28 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.zy.android.bring.model.ListModel;
+import com.mobeta.android.dslv.DragSortController;
+import com.mobeta.android.dslv.DragSortListView;
+import com.mobeta.android.dslv.DragSortListView.DropListener;
+import com.zy.android.dowhat.model.ListModel;
 
-public class TabContentFragment extends Fragment implements OnItemLongClickListener, OnItemClickListener {
+public class TaskListFragment extends Fragment implements OnItemLongClickListener, OnItemClickListener {
     public static final int REQUEST_ADD_ITEM = 0;
 	private BringList mList;
 	private BringAdapter mAdapter;
-	public TabContentFragment() {
+	public TaskListFragment() {
 	}
 
 	public void setList(BringList list) {
 		mList = list;
 	}
 
-	public static TabContentFragment newInstance(BringList list) {
-		TabContentFragment fragment = new TabContentFragment();
+	public static TaskListFragment newInstance(BringList list, OnTasksChangedListener l) {
+		TaskListFragment fragment = new TaskListFragment();
 		fragment.setList(list);
+		fragment.setOnTasksChangedListener(l);
 		return fragment;
 	}
 
@@ -49,15 +52,40 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View fragView = inflater.inflate(R.layout.bring_list, container, false);
 
-		ListView listView = (ListView) fragView.findViewById(R.id.main_listview);
+		DragSortListView listView = (DragSortListView) fragView.findViewById(R.id.main_listview);
 		listView.setOnItemLongClickListener(this);
 		listView.setOnItemClickListener(this);
 		mAdapter= new BringAdapter(getActivity(), mList);
 		listView.setAdapter(mAdapter);
-
+		DragSortController controller = buildController(listView);
+		listView.setFloatViewManager(controller);
+		listView.setOnTouchListener(controller);
+		listView.setDropListener(new DropListener() {
+			@Override
+			public void drop(int from, int to) {
+				String item = mList.remove(from);
+				mList.add(to, item);
+				ListModel.getInstance(getActivity()).saveList(mList);
+				mAdapter.notifyDataSetChanged();
+			}
+		});
 		return fragView;
 	}
 
+	public DragSortController buildController(DragSortListView dslv) {
+		DragSortController controller = new DragSortController(dslv);
+		controller.setSortEnabled(true);
+		controller.setDragHandleId(R.id.drag_handle);
+		controller.setDragInitMode(DragSortController.ON_DRAG);
+		return controller;
+	}
+
+	private OnTasksChangedListener mTasksChangedListener;
+	public void setOnTasksChangedListener(OnTasksChangedListener l) {
+		mTasksChangedListener = l;
+	}
+	
+	
 	/**
 	 * Remove the item at the given position
 	 * @param pos
@@ -74,6 +102,9 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 				ListModel.getInstance(getActivity()).saveList(mList);
 
 				mAdapter.notifyDataSetChanged();
+				if (mTasksChangedListener != null) {
+					mTasksChangedListener.onTasksChanged();
+				}
 			}
 		});
 		builder.create().show();
@@ -91,10 +122,18 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
 		return true;
 	}
 
-	public void addItem() {
-		Intent intent = new Intent(getActivity(), PromptDialog_.class);
-		intent.putExtra(Const.Extras.EXTRA_STRING_TITLE, "添加项目");
-		startActivityForResult(intent, TabContentFragment.REQUEST_ADD_ITEM);
+	public void addItem(String item) {
+		if (mList.contains(item)) {
+			Toast.makeText(this.getActivity(), "Item " + item + " already exists!", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		mList.add(0, item);
+		ListModel.getInstance(getActivity()).saveList(mList);
+		mAdapter.notifyDataSetChanged();
+		if (mTasksChangedListener != null) {
+			mTasksChangedListener.onTasksChanged();
+		}
 	}
 
 	@Override
@@ -112,10 +151,6 @@ public class TabContentFragment extends Fragment implements OnItemLongClickListe
         } 
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-
-
-
 
 
 

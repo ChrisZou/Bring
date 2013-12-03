@@ -3,7 +3,7 @@
 //
 
 
-package com.zy.android.bring;
+package com.zy.android.dowhat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import com.zy.android.bring.R.id;
+import android.widget.EditText;
+import com.zy.android.dowhat.R.id;
 
 public final class PromptDialog_
     extends PromptDialog
@@ -29,21 +30,7 @@ public final class PromptDialog_
     }
 
     private void afterSetContentView_() {
-        {
-            View view = findViewById(id.prompt_dialog_ok);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        PromptDialog_.this.onOk();
-                    }
-
-                }
-                );
-            }
-        }
+        mEditText = ((EditText) findViewById(id.itemTitle));
         {
             View view = findViewById(id.prompt_dialog_cancel);
             if (view!= null) {
@@ -59,6 +46,22 @@ public final class PromptDialog_
                 );
             }
         }
+        {
+            View view = findViewById(id.prompt_dialog_ok);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        PromptDialog_.this.onOk();
+                    }
+
+                }
+                );
+            }
+        }
+        initViews();
     }
 
     @Override

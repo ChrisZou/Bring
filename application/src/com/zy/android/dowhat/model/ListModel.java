@@ -1,4 +1,4 @@
-package com.zy.android.bring.model;
+package com.zy.android.dowhat.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.zy.android.bring.BringList;
-import com.zy.android.bring.utils.L;
+import com.zy.android.dowhat.BringList;
+import com.zy.android.dowhat.utils.L;
 
 public class ListModel {
 
@@ -62,7 +62,20 @@ public class ListModel {
 		saveLists();
 	}
 
-	private void saveLists() {
+	public void renameList(BringList list, String newName) {
+		mPreferences.edit().remove(PREF_STRING_LIST_ + list.getName()).commit();
+		list.setName(newName);
+		saveList(list);
+		saveLists();
+	}
+
+	public void removeList(BringList list) {
+		mLists.remove(list);
+		mPreferences.edit().remove(PREF_STRING_LIST_ + list.getName()).commit();
+		saveLists();
+	}
+
+	public void saveLists() {
 		String lists = TextUtils.join(ITEM_SPLITER, mLists);
 		mPreferences.edit().putString(PREF_STRING_LISTS, lists).commit();
 	}

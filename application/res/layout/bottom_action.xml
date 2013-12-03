@@ -2,21 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true" 
     android:orientation="horizontal" >
-
-    <Button
-        android:id="@+id/main_add_item"
-        style="@style/bottom_button"
-        android:text="@string/add" />
-
-    <Button
-        android:id="@+id/main_add_list"
-        style="@style/bottom_button"
-        android:text="@string/add_list" />
-
-    <Button
-        android:id="@+id/main_close"
-        style="@style/bottom_button"
-        android:text="@string/close" />
-
+    <EditText
+        android:id="@+id/main_add_edit"
+         style="@style/bottom_button"
+         android:layout_margin="10dp"
+        android:layout_gravity="center_vertical"/>
 </LinearLayout>
