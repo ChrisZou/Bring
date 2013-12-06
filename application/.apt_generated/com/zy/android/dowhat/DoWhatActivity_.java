@@ -18,8 +18,8 @@ import com.googlecode.androidannotations.api.SdkVersionHelper;
 import com.viewpagerindicator.TabPageIndicator;
 import com.zy.android.dowhat.R.id;
 
-public final class BringActivity_
-    extends BringActivity
+public final class DoWhatActivity_
+    extends DoWhatActivity
 {
 
 
@@ -65,8 +65,8 @@ public final class BringActivity_
         return super.onKeyDown(keyCode, event);
     }
 
-    public static BringActivity_.IntentBuilder_ intent(Context context) {
-        return new BringActivity_.IntentBuilder_(context);
+    public static DoWhatActivity_.IntentBuilder_ intent(Context context) {
+        return new DoWhatActivity_.IntentBuilder_(context);
     }
 
     public static class IntentBuilder_ {
@@ -76,14 +76,14 @@ public final class BringActivity_
 
         public IntentBuilder_(Context context) {
             context_ = context;
-            intent_ = new Intent(context, BringActivity_.class);
+            intent_ = new Intent(context, DoWhatActivity_.class);
         }
 
         public Intent get() {
             return intent_;
         }
 
-        public BringActivity_.IntentBuilder_ flags(int flags) {
+        public DoWhatActivity_.IntentBuilder_ flags(int flags) {
             intent_.setFlags(flags);
             return this;
         }

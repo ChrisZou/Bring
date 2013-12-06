@@ -31,7 +31,7 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.zy.android.dowhat.model.ListModel;
 
 @EActivity
-public class BringActivity extends FragmentActivity implements OnTasksChangedListener {
+public class DoWhatActivity extends FragmentActivity implements OnTasksChangedListener {
 
 	public static final String ITEM_SPLITER = "::";
 	public static final String PREF_STRING_LIST_ = "pref_string_list_";
@@ -57,20 +57,22 @@ public class BringActivity extends FragmentActivity implements OnTasksChangedLis
     
 	private int mNotificationId = 0;
 	private void notification() {
-		String item = mLists.get(0).get(0);
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-		mBuilder.setSmallIcon(R.drawable.todo).setContentTitle("Todo").setContentText(item);
-		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(this, BringActivity_.class);
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(BringActivity_.class);
-		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		mBuilder.setOngoing(true);
-		mNotificationManager.notify(mNotificationId, mBuilder.build());
+		if (mLists.size() > 0 && mLists.get(0).size() > 0) {
+			String item = mLists.get(0).get(0);
+			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+			mBuilder.setSmallIcon(R.drawable.todo).setContentTitle("Todo").setContentText(item);
+			// Creates an explicit intent for an Activity in your app
+			Intent resultIntent = new Intent(this, DoWhatActivity_.class);
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+			// Adds the back stack for the Intent (but not the Intent itself)
+			stackBuilder.addParentStack(DoWhatActivity_.class);
+			stackBuilder.addNextIntent(resultIntent);
+			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+			mBuilder.setContentIntent(resultPendingIntent);
+			NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			mBuilder.setOngoing(true);
+			mNotificationManager.notify(mNotificationId, mBuilder.build());
+		}
 	}
 
     void addItem() {
@@ -82,7 +84,7 @@ public class BringActivity extends FragmentActivity implements OnTasksChangedLis
     }
     
     void addList() {
-		Intent intent = new Intent(BringActivity.this, PromptDialog_.class);
+		Intent intent = new Intent(DoWhatActivity.this, PromptDialog_.class);
 		intent.putExtra(PromptDialog.EXTRA_STRING_TITLE, "添加列表");
         startActivityForResult(intent, REQUEST_ADD_LIST);
     }
@@ -92,7 +94,7 @@ public class BringActivity extends FragmentActivity implements OnTasksChangedLis
 	}
 
 	void renameList() {
-		Intent intent = new Intent(BringActivity.this, PromptDialog_.class);
+		Intent intent = new Intent(DoWhatActivity.this, PromptDialog_.class);
 		intent.putExtra(PromptDialog.EXTRA_STRING_TITLE, "Rename list");
 		intent.putExtra(PromptDialog.EXTRA_STRING_TIP, getCurrentList().getName());
 		startActivityForResult(intent, REQUEST_RENAME_LIST);
@@ -144,6 +146,7 @@ public class BringActivity extends FragmentActivity implements OnTasksChangedLis
 		return super.onMenuItemSelected(featureId, item);
 	}
 
+
 	private static final int REQUEST_SORT_LISTS = 0;
 	private void sortLists() {
 		startActivityForResult(new Intent(this, SortListsActivity_.class), REQUEST_SORT_LISTS);
@@ -156,7 +159,7 @@ public class BringActivity extends FragmentActivity implements OnTasksChangedLis
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				ListModel.getInstance(BringActivity.this).removeList(mLists.get(mPager.getCurrentItem()));
+				ListModel.getInstance(DoWhatActivity.this).removeList(mLists.get(mPager.getCurrentItem()));
 
 				mPager.setCurrentItem(0);
 				mIndicator.notifyDataSetChanged();
@@ -210,13 +213,13 @@ public class BringActivity extends FragmentActivity implements OnTasksChangedLis
 
 			fragments = new ArrayList<TaskListFragment>();
 			for(BringList list:mLists) {
-				fragments.add(TaskListFragment.newInstance(list, BringActivity.this));
+				fragments.add(TaskListFragment.newInstance(list, DoWhatActivity.this));
 			}
 
 		}
 
 		public void addList(BringList list) {
-			fragments.add(TaskListFragment.newInstance(list, BringActivity.this));
+			fragments.add(TaskListFragment.newInstance(list, DoWhatActivity.this));
 			notifyDataSetChanged();
 		}
 

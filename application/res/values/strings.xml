@@ -12,8 +12,12 @@
 	<string name="add_list">添加列表</string>
 	<string name="close">关闭</string>
 	<string name="add_item">添加项目</string>
-	<string name="action_delete">Delete list</string>
+	<string name="action_delete_list">Delete list</string>
+	<string name="action_delete">Delete</string>
+	<string name="action_remove_item">Remove item</string>
 	<string name="action_add_list">Add list</string>
 	<string name="action_sort_list">Sort list</string>
 	<string name="action_rename_list">Rename list</string>
+	<string name="action_move_to">Move to</string>
+	<string name="action_edit">Edit</string>
 </resources>
