@@ -19,14 +19,14 @@ public class SortListsActivity extends Activity {
 	@ViewById(R.id.sort_listview)
 	DragSortListView mListView;
 
-	List<BringList> mLists;
+	List<TaskList> mLists;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sort_lists_layout);
 	}
 
-	ArrayAdapter<BringList> mAdapter;
+	ArrayAdapter<TaskList> mAdapter;
 	@AfterViews
 	void loadLists() {
 		mListView.setDragSortListener(new DragSortListener() {
@@ -38,7 +38,7 @@ public class SortListsActivity extends Activity {
 			}
 			@Override
 			public void drop(int from, int to) {
-				BringList list = mLists.remove(from);
+				TaskList list = mLists.remove(from);
 				mLists.add(to, list);
 				ListModel.getInstance(SortListsActivity.this).saveLists();
 				mAdapter.notifyDataSetChanged();
@@ -47,7 +47,7 @@ public class SortListsActivity extends Activity {
 		});
 		
 		mLists = ListModel.getInstance(this).getAllLists();
-		mAdapter = new ArrayAdapter<BringList>(this, android.R.layout.simple_expandable_list_item_1, mLists);
+		mAdapter = new ArrayAdapter<TaskList>(this, android.R.layout.simple_expandable_list_item_1, mLists);
 		mListView.setAdapter(mAdapter);
 	}
 

@@ -29,17 +29,17 @@ import com.mobeta.android.dslv.DragSortListView.DropListener;
 import com.zy.android.dowhat.model.ListModel;
 
 public class TaskListFragment extends Fragment implements OnItemLongClickListener, OnItemClickListener {
-	private BringList mList;
+	private TaskList mList;
 	private BringAdapter mAdapter;
 	private DragSortListView mListView;
 	public TaskListFragment() {
 	}
 
-	public void setList(BringList list) {
+	public void setList(TaskList list) {
 		mList = list;
 	}
 
-	public static TaskListFragment newInstance(BringList list, OnTasksChangedListener l) {
+	public static TaskListFragment newInstance(TaskList list, OnTasksChangedListener l) {
 		TaskListFragment fragment = new TaskListFragment();
 		fragment.setList(list);
 		fragment.setOnTasksChangedListener(l);
@@ -50,7 +50,7 @@ public class TaskListFragment extends Fragment implements OnItemLongClickListene
 		return mList.getName();
 	}
 
-	public BringList getList() {
+	public TaskList getList() {
 		return mList;
 	}
 
@@ -244,10 +244,10 @@ public class TaskListFragment extends Fragment implements OnItemLongClickListene
 
 	private static class BringAdapter extends BaseAdapter {
 
-		private BringList mList;
+		private TaskList mList;
 		private Context mContext;
 
-		public BringAdapter(Context context, BringList list) {
+		public BringAdapter(Context context, TaskList list) {
 			mList = list;
 			mContext = context;
 		}

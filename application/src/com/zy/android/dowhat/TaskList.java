@@ -3,10 +3,10 @@ package com.zy.android.dowhat;
 import java.util.ArrayList;
 
 @SuppressWarnings("serial")
-public class BringList extends ArrayList<String> {
+public class TaskList extends ArrayList<String> {
 	private String mName;
 	
-	public BringList(String name) {
+	public TaskList(String name) {
 		this.mName = name;
 	}
 	

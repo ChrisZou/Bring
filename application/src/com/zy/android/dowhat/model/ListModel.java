@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.zy.android.dowhat.BringList;
-import com.zy.android.dowhat.utils.L;
+import com.chriszou.androidlibs.L;
+import com.zy.android.dowhat.TaskList;
 
 public class ListModel {
 
@@ -20,11 +20,11 @@ public class ListModel {
 	private volatile static ListModel singleInstance;
 	private SharedPreferences mPreferences;
 
-	private final List<BringList> mLists;
+	private final List<TaskList> mLists;
 
 	private ListModel(Context ctx) {
 		mPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-		mLists = new ArrayList<BringList>();
+		mLists = new ArrayList<TaskList>();
 		init();
 	}
 
@@ -49,7 +49,7 @@ public class ListModel {
 		return singleInstance;
 	}
 
-	public List<BringList> getAllLists() {
+	public List<TaskList> getAllLists() {
 		return mLists;
 	}
 	
@@ -58,18 +58,18 @@ public class ListModel {
 			return;
 		}
 
-		mLists.add(new BringList(name));
+		mLists.add(new TaskList(name));
 		saveLists();
 	}
 
-	public void renameList(BringList list, String newName) {
+	public void renameList(TaskList list, String newName) {
 		mPreferences.edit().remove(PREF_STRING_LIST_ + list.getName()).commit();
 		list.setName(newName);
 		saveList(list);
 		saveLists();
 	}
 
-	public void removeList(BringList list) {
+	public void removeList(TaskList list) {
 		mLists.remove(list);
 		mPreferences.edit().remove(PREF_STRING_LIST_ + list.getName()).commit();
 		saveLists();
@@ -80,10 +80,10 @@ public class ListModel {
 		mPreferences.edit().putString(PREF_STRING_LISTS, lists).commit();
 	}
 
-	public BringList getList(String name){
+	public TaskList getList(String name){
         String strItems = mPreferences.getString(PREF_STRING_LIST_+name, "");
         String[] arrItems = strItems.split(ITEM_SPLITER);
-        BringList list = new BringList(name);
+        TaskList list = new TaskList(name);
         for (String str : arrItems) {
             if (str != null && !(str.trim().length() == 0)) {
                 list.add(str);
@@ -93,7 +93,7 @@ public class ListModel {
 	}
 
 	public boolean hasList(String name){
-		for(BringList list:mLists) {
+		for(TaskList list:mLists) {
 			if(list.getName().equals(name)) {
 				return true;
 			}
@@ -102,7 +102,7 @@ public class ListModel {
 		return false;
 	}
 
-	public void saveList(BringList list) {
+	public void saveList(TaskList list) {
 		String items = TextUtils.join(ITEM_SPLITER, list);
 		mPreferences.edit().putString(PREF_STRING_LIST_ + list.getName(), items).commit();
 		L.l("save list");

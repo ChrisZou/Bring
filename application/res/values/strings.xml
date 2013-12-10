@@ -20,4 +20,6 @@
 	<string name="action_rename_list">Rename list</string>
 	<string name="action_move_to">Move to</string>
 	<string name="action_edit">Edit</string>
+	<string name="action_weekly_plan">Weekly plan</string>
+	<string name="action_three_month_plan">Three month plan</string>
 </resources>

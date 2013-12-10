@@ -37,7 +37,7 @@ public class DoWhatActivity extends FragmentActivity implements OnTasksChangedLi
 	public static final String PREF_STRING_LIST_ = "pref_string_list_";
 	public static final String PREF_STRING_LISTS = "pref_string_list_names";
 
-    private List<BringList> mLists = new ArrayList<BringList>();
+    private List<TaskList> mLists = new ArrayList<TaskList>();
 	private TasksFragmentAdapter mAdapter;
 
 	@ViewById(R.id.main_pager)
@@ -53,6 +53,7 @@ public class DoWhatActivity extends FragmentActivity implements OnTasksChangedLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
     }
     
 	private int mNotificationId = 0;
@@ -89,7 +90,7 @@ public class DoWhatActivity extends FragmentActivity implements OnTasksChangedLi
         startActivityForResult(intent, REQUEST_ADD_LIST);
     }
 
-	private BringList getCurrentList() {
+	private TaskList getCurrentList() {
 		return mLists.get(mPager.getCurrentItem());
 	}
 
@@ -212,13 +213,13 @@ public class DoWhatActivity extends FragmentActivity implements OnTasksChangedLi
 			super(fm);
 
 			fragments = new ArrayList<TaskListFragment>();
-			for(BringList list:mLists) {
+			for(TaskList list:mLists) {
 				fragments.add(TaskListFragment.newInstance(list, DoWhatActivity.this));
 			}
 
 		}
 
-		public void addList(BringList list) {
+		public void addList(TaskList list) {
 			fragments.add(TaskListFragment.newInstance(list, DoWhatActivity.this));
 			notifyDataSetChanged();
 		}
