@@ -29,6 +29,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.viewpagerindicator.TabPageIndicator;
 import com.zy.android.dowhat.model.ListModel;
+import com.zy.android.dowhat.model.TaskModel;
 
 @EActivity
 public class DoWhatActivity extends FragmentActivity implements OnTasksChangedListener {
@@ -48,12 +49,12 @@ public class DoWhatActivity extends FragmentActivity implements OnTasksChangedLi
 
 	@ViewById(R.id.main_add_edit)
 	EditText mAddEdit;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
     }
     
 	private int mNotificationId = 0;
@@ -119,6 +120,36 @@ public class DoWhatActivity extends FragmentActivity implements OnTasksChangedLi
 				return false;
 			}
 		});
+
+		testDb();
+    }
+    
+    
+    private void testDb() {
+
+		// for (int i = 0; i < 10; i++) {
+		// Task task = new Task("task " + i);
+		// task.setUuid(UUID.randomUUID().toString());
+		// try {
+		// TaskModel.getInstance(this).addTask(task);
+		// } catch (IllegalAccessException e) {
+		// e.printStackTrace();
+		// }
+		// }
+
+		// List<Task> tasks;
+		// try {
+		// tasks = TaskModel.getInstance(this).getAllTasks();
+		// L.l("task count: " + tasks.size());
+		// for (Task task : tasks) {
+		// L.l("task: " + task.getTitle());
+		// }
+		// } catch (IllegalAccessException e) {
+		// e.printStackTrace();
+		// }
+
+		TaskModel.getInstance(this).removeAll();
+
     }
     
 

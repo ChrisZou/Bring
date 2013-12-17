@@ -32,21 +32,6 @@ public final class PromptDialog_
     private void afterSetContentView_() {
         mEditText = ((EditText) findViewById(id.itemTitle));
         {
-            View view = findViewById(id.prompt_dialog_cancel);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        PromptDialog_.this.cancelAdding();
-                    }
-
-                }
-                );
-            }
-        }
-        {
             View view = findViewById(id.prompt_dialog_ok);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
@@ -55,6 +40,21 @@ public final class PromptDialog_
                     @Override
                     public void onClick(View view) {
                         PromptDialog_.this.onOk();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = findViewById(id.prompt_dialog_cancel);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        PromptDialog_.this.cancelAdding();
                     }
 
                 }

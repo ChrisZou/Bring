@@ -4,21 +4,23 @@ import com.chriszou.androidorm.Column;
 import com.chriszou.androidorm.ColumnType;
 import com.chriszou.androidorm.Table;
 
-@Table(name = "table_task")
+@Table(name = "table_tasks")
 public class Task {
 	@Column(name = "title", type = ColumnType.STRING)
 	private String title;
 
-	@Column(name = "uuid", type = ColumnType.STRING, primaryKey = true)
+	@Column(name = "uuid", type = ColumnType.STRING)
 	private String uuid;
 
-	@Column(name = "_id", type = ColumnType.INTEGER,extra = "AUTOINCREMENT")
-	private String id;
+	@Column(name = "_id", type = ColumnType.INTEGER, primaryKey = true, autoIncrement = true)
+	private int id;
 
-	public Task(String title, String uuid, String id) {
+	public Task(String title) {
 		this.title = title;
-		this.uuid = uuid;
-		this.id = id;
+	}
+
+	public Task() {
+
 	}
 
 	public String getTitle() {
@@ -37,11 +39,11 @@ public class Task {
 		this.uuid = uuid;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

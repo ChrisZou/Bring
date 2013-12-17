@@ -33,8 +33,8 @@ public final class DoWhatActivity_
     }
 
     private void afterSetContentView_() {
-        mIndicator = ((TabPageIndicator) findViewById(id.main_indicator));
         mAddEdit = ((EditText) findViewById(id.main_add_edit));
+        mIndicator = ((TabPageIndicator) findViewById(id.main_indicator));
         mPager = ((ViewPager) findViewById(id.main_pager));
         loadItems();
     }

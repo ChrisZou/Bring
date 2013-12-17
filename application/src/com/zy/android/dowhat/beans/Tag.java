@@ -9,10 +9,10 @@ public class Tag {
 	@Column(name = "title", type = ColumnType.STRING)
 	private String title;
 
-	@Column(name = "uuid", type = ColumnType.STRING, primaryKey = true)
+	@Column(name = "uuid", type = ColumnType.STRING)
 	private String uuid;
 
-	@Column(name = "_id", type = ColumnType.INTEGER, extra = "AUTOINCREMENT")
+	@Column(name = "_id", type = ColumnType.INTEGER, primaryKey = true, autoIncrement = true)
 	private String id;
 
 	public Tag(String title, String uuid, String id) {
