@@ -1,11 +1,14 @@
 package com.zy.android.dowhat.beans;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import com.chriszou.androidorm.Column;
 import com.chriszou.androidorm.ColumnType;
 import com.chriszou.androidorm.Table;
 
 @Table(name = "table_tasks")
-public class Task {
+public class Task implements Cloneable, Serializable {
 	@Column(name = "title", type = ColumnType.STRING)
 	private String title;
 
@@ -17,10 +20,10 @@ public class Task {
 
 	public Task(String title) {
 		this.title = title;
+		uuid = UUID.randomUUID().toString();
 	}
 
 	public Task() {
-
 	}
 
 	public String getTitle() {
@@ -47,4 +50,13 @@ public class Task {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return title;
+	}
+
+	@Override
+	public Task clone() throws CloneNotSupportedException {
+		return (Task) super.clone();
+	}
 }

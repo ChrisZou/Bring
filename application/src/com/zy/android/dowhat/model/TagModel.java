@@ -22,4 +22,13 @@ public class TagModel extends Model<Tag> {
 		}
 		return singleInstance;
 	}
+
+	public Tag getTagFromUuid(String tagUuid) {
+		for (Tag tag : copyAll()) {
+			if (tag.getUuid().equals(tagUuid)) {
+				return tag;
+			}
+		}
+		return null;
+	}
 }
