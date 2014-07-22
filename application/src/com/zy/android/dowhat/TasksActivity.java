@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -44,6 +40,7 @@ import com.zy.android.dowhat.custom.ConfirmDialog.OkAction;
 import com.zy.android.dowhat.model.TagModel;
 import com.zy.android.dowhat.model.TagTaskModel;
 import com.zy.android.dowhat.model.TaskModel;
+import com.zy.android.dowhat.utils.NotificationBarHelper;
 
 @EActivity(R.layout.tasks_activity)
 public class TasksActivity extends Activity implements OnItemClickListener, OnItemLongClickListener {
@@ -116,7 +113,7 @@ public class TasksActivity extends Activity implements OnItemClickListener, OnIt
 		mTasksAdapter = new TaskAdapter(this, R.layout.simple_listitem, TaskModel.getInstance(this).copyAll());
 		mTasksListView.setAdapter(mTasksAdapter);
 
-		notification();
+		NotificationBarHelper.showNotification(this, mTasksAdapter.getItem(0).getTitle());
 	}
 
 	@Click(R.id.main_all_tasks)
@@ -149,26 +146,6 @@ public class TasksActivity extends Activity implements OnItemClickListener, OnIt
 		mTagsPopup = new TagsPopup(this, getResources().getDimensionPixelSize(R.dimen.tags_popup_width), getResources().getDimensionPixelSize(R.dimen.tags_popup_height), mTagsOfNewTask);
 		mTagsPopup.setOutsideTouchable(true);
 		mTagsPopup.showAsDropDown(mAddWithTag);
-	}
-
-	private int mNotificationId = 0;
-	private void notification() {
-		if (mTasksAdapter.getCount() > 0) {
-			String task = mTasksAdapter.getItem(0).getTitle();
-			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-			mBuilder.setSmallIcon(R.drawable.todo).setContentTitle("Todo").setContentText(task);
-			// Creates an explicit intent for an Activity in your app
-			Intent resultIntent = new Intent(this, TasksActivity_.class);
-			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-			// Adds the back stack for the Intent (but not the Intent itself)
-			stackBuilder.addParentStack(TasksActivity_.class);
-			stackBuilder.addNextIntent(resultIntent);
-			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-			mBuilder.setContentIntent(resultPendingIntent);
-			NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			mBuilder.setOngoing(true);
-			mNotificationManager.notify(mNotificationId, mBuilder.build());
-		}
 	}
 
 	public void renameTag(final Tag tag) {

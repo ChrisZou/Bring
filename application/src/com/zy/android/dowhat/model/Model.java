@@ -59,6 +59,10 @@ public abstract class Model<T extends Cloneable> {
 		return results;
 	}
 
+	public int getCount() {
+		return mAllItems.size();
+	}
+
 	public void updateItem(T t) {
 		try {
 			mOperator.updateItem(t);
