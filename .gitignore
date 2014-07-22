@@ -30,3 +30,6 @@ proguard/
 
 #androidannotation generated files
 .apt_generated/
+
+#File create and used by Mac Finder
+**/.DS_Store
