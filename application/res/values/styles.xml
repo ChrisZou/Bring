@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
     <style name="bottom_button">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">1</item>
     </style>
-    
+
     <style name="Theme.PageIndicatorDefaults" parent="android:Theme.Holo">
         <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
     </style>
-    
+
     <style name="simple_listitem">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center|left</item>
     </style>
-    
+
     <style name="horizontal_divider">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/main_divider_color</item>
     </style>
+
 </resources>

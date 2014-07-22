@@ -21,14 +21,17 @@ public class TaskTag implements Cloneable {
 	@Column(name = "tag_uuid", type = ColumnType.STRING, notNull = true)
 	private String tagUuid;
 
-	public TaskTag(String taskUuid, String tagUuid) {
+	private TaskTag(String taskUuid, String tagUuid) {
 		this.taskUuid = taskUuid;
 		this.tagUuid = tagUuid;
 		uuid = UUID.randomUUID().toString();
 	}
 
-	public TaskTag() {
+	public TaskTag(Task task, Tag tag) {
+		this(task.getUuid(), tag.getUuid());
 	}
+	
+	public TaskTag() { }
 
 	public int getId() {
 		return id;

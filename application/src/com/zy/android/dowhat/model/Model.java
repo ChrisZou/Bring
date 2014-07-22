@@ -59,6 +59,14 @@ public abstract class Model<T extends Cloneable> {
 		return results;
 	}
 
+	public void updateItem(T t) {
+		try {
+			mOperator.updateItem(t);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void removeAll() {
 		mOperator.deleteAll();
 		mAllItems.clear();

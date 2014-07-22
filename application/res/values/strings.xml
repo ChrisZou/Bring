@@ -15,11 +15,12 @@
 	<string name="action_delete_list">Delete list</string>
 	<string name="action_delete">Delete</string>
 	<string name="action_remove_item">Remove item</string>
-	<string name="action_add_list">Add list</string>
-	<string name="action_sort_list">Sort list</string>
-	<string name="action_rename_list">Rename list</string>
 	<string name="action_move_to">Move to</string>
-	<string name="action_edit">Edit</string>
+	<string name="action_rename">Rename</string>
 	<string name="action_weekly_plan">Weekly plan</string>
 	<string name="action_three_month_plan">Three month plan</string>
+	<string name="action_goals">Goals</string>
+	<string name="action_edit">Edit</string>
+	<string name="action_sort_list">Sort</string>
+	<string name="action_add_list">Add list</string>
 </resources>

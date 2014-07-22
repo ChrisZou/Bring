@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import com.chriszou.androidlibs.L;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
@@ -21,6 +22,7 @@ import com.zy.android.dowhat.beans.TaskTag;
 import com.zy.android.dowhat.custom.TagView;
 import com.zy.android.dowhat.model.TagModel;
 import com.zy.android.dowhat.model.TagTaskModel;
+import com.zy.android.dowhat.model.TaskModel;
 
 @EActivity(R.layout.task_detail_layout)
 public class TaskDetailActivity extends Activity implements OnItemClickListener {
@@ -49,6 +51,31 @@ public class TaskDetailActivity extends Activity implements OnItemClickListener 
 		mAdapter = new TagAdapter(mAllTags, mTaskTags);
 		mGridView.setAdapter(mAdapter);
 		mGridView.setOnItemClickListener(this);
+	}
+	
+	
+
+	@Override
+	protected void onPause() {
+		saveTask();
+		super.onPause();
+	}
+
+	@Override
+	public void onBackPressed() {
+		L.l("onbackpressed");
+		saveTask();
+		super.onBackPressed();
+	}
+
+	private void saveTask() {
+		String text = mTaskEdit.getText().toString().trim();
+		if (!text.equals(mTask.getTitle())) {
+			mTask.setTitle(text);
+			TaskModel.getInstance(this).updateItem(mTask);
+			L.l("update");
+			TaskModel.getInstance(this).getTaskFromUuid(mTask.getUuid()).setTitle(text);
+		}
 	}
 
 	private class TagAdapter extends BaseAdapter {
@@ -95,7 +122,7 @@ public class TaskDetailActivity extends Activity implements OnItemClickListener 
 			TagTaskModel.getInstance(getApplicationContext()).removeItem(mTask.getUuid(), tag.getUuid());
 			mTaskTags.remove(tag);
 		} else {
-			TaskTag taskTag = new TaskTag(mTask.getUuid(), tag.getUuid());
+			TaskTag taskTag = new TaskTag(mTask, tag);
 			TagTaskModel.getInstance(getApplicationContext()).addItem(taskTag);
 			mTaskTags.add(tag);
 		}

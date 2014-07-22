@@ -37,25 +37,25 @@ public class MyNotification extends Notification {
 
 	public void setListeners(RemoteViews view) {
 		// radio listener
-		Intent radio = new Intent(ctx, DoWhatActivity.class);
+		Intent radio = new Intent(ctx, TasksActivity_.class);
 		radio.putExtra("DO", "radio");
 		PendingIntent pRadio = PendingIntent.getActivity(ctx, 0, radio, 0);
 		view.setOnClickPendingIntent(R.id.radio, pRadio);
 
 		// volume listener
-		Intent volume = new Intent(ctx, DoWhatActivity.class);
+		Intent volume = new Intent(ctx, TasksActivity_.class);
 		volume.putExtra("DO", "volume");
 		PendingIntent pVolume = PendingIntent.getActivity(ctx, 1, volume, 0);
 		view.setOnClickPendingIntent(R.id.volume, pVolume);
 
 		// reboot listener
-		Intent reboot = new Intent(ctx, DoWhatActivity.class);
+		Intent reboot = new Intent(ctx, TasksActivity_.class);
 		reboot.putExtra("DO", "reboot");
 		PendingIntent pReboot = PendingIntent.getActivity(ctx, 5, reboot, 0);
 		view.setOnClickPendingIntent(R.id.reboot, pReboot);
 
 		// app listener
-		Intent app = new Intent(ctx, DoWhatActivity.class);
+		Intent app = new Intent(ctx, TasksActivity_.class);
 		app.putExtra("DO", "app");
 		PendingIntent pApp = PendingIntent.getActivity(ctx, 4, app, 0);
 		view.setOnClickPendingIntent(R.id.app, pApp);

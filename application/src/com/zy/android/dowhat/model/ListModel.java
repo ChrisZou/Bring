@@ -13,8 +13,8 @@ import com.zy.android.dowhat.TaskList;
 
 public class ListModel {
 
-	public static final String ITEM_SPLITER = "::";
 	public static final String PREF_STRING_LIST_ = "pref_string_list_";
+	public static final String ITEM_SPLITER = "::";
 	public static final String PREF_STRING_LISTS = "pref_string_list_names";
 
 	private volatile static ListModel singleInstance;

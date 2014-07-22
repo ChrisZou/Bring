@@ -6,10 +6,12 @@
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="18"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
         android:icon="@drawable/todo"
         android:label="@string/app_name"
-        android:allowBackup="true" >
+        android:allowBackup="true"
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.zy.android.dowhat.PromptDialog_"
             android:label="@string/add_item"
@@ -17,6 +19,7 @@
             android:theme="@android:style/Theme.Dialog">
         </activity>
         <activity android:name=".SortListsActivity_"/>
+        <activity android:name=".GoalsActivity_"/>
         <activity android:name=".TasksActivity_"
             android:launchMode="singleTask">
             <intent-filter>
@@ -24,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskDetailActivity_" android:launchMode="singleTask"></activity>
+        <activity android:name=".TaskDetailActivity_" android:launchMode="standard"></activity>
     </application>
 
 </manifest>

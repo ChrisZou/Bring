@@ -17,6 +17,9 @@ public class Tag implements Cloneable {
 	@Column(name = "_id", type = ColumnType.INTEGER, primaryKey = true, autoIncrement = true)
 	private int id;
 
+	public static final Tag sNoTag = new Tag("No Tag");
+	public static final Tag sAll = new Tag("All");
+
 	public Tag(String title, String uuid, int id) {
 		this.title = title;
 		this.uuid = uuid;

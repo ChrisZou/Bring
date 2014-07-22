@@ -9,6 +9,7 @@ import com.chriszou.androidorm.Table;
 
 @Table(name = "table_tasks")
 public class Task implements Cloneable, Serializable {
+	
 	@Column(name = "title", type = ColumnType.STRING)
 	private String title;
 

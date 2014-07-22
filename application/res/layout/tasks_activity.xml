@@ -13,25 +13,26 @@
         <TextView
             android:id="@+id/main_all_tasks"
             style="@style/simple_listitem"
-            android:background="@drawable/selector_button_bg"
+            android:background="@drawable/selector_simple_listitem"
             android:text="All" />
         <View style="@style/horizontal_divider"/>
         <TextView
             android:id="@+id/main_no_tag_tasks"
             style="@style/simple_listitem"
-            android:background="@drawable/selector_button_bg"
+            android:background="@drawable/selector_simple_listitem"
             android:text="No tag" />
         <View style="@style/horizontal_divider"/>
         <ListView
             android:id="@+id/main_tags"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
+            android:choiceMode="singleChoice"
+            android:listSelector="@drawable/item_active"
             android:layout_weight="1" />
         <View style="@style/horizontal_divider"/>
         <TextView
             android:id="@+id/main_add_tag"
             style="@style/simple_listitem"
-            android:background="@drawable/selector_button_bg"
             android:text="Add" />
     </LinearLayout>
 
@@ -51,10 +52,20 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
+        <LinearLayout style="@style/fwh">
         <EditText android:id="@+id/main_add_task"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             />
+        <ImageView android:id="@+id/main_add_task_with_tag"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:padding="8dp"
+            android:background="@drawable/selector_simple_listitem"
+            android:src="@drawable/tag"
+            />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
