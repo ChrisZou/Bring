@@ -344,13 +344,12 @@ public class TasksActivity extends Activity implements OnItemClickListener, OnIt
 			View view = super.getView(position, convertView, parent);
 			Task task = getItem(position);
 			
-			if(task.getTitle().endsWith("!!")||task.getTitle().endsWith("！！")) {
+			if (task.getTitle().endsWith("!") || task.getTitle().endsWith("！")) {
 				view.setBackgroundColor(Color.YELLOW);
 			}
 			if(task.getTitle().startsWith("!!")||task.getTitle().startsWith("！！")) {
 				view.setBackgroundColor(Color.RED);
 			}
-			L.l("getview: " + task.getTitle());
 			return view;
 		}
 		
