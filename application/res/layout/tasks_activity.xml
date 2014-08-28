@@ -45,7 +45,9 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="3"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
 
         <ListView
             android:id="@+id/main_tasks"

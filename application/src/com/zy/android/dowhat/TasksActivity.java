@@ -113,12 +113,13 @@ public class TasksActivity extends Activity implements OnItemClickListener, OnIt
 		mTasksAdapter = new TaskAdapter(this, R.layout.simple_listitem, TaskModel.getInstance(this).copyAll());
 		mTasksListView.setAdapter(mTasksAdapter);
 
-		NotificationBarHelper.showNotification(this, mTasksAdapter.getItem(0).getTitle());
+		if (mTasksAdapter.getCount() > 0) {
+			NotificationBarHelper.showNotification(this, mTasksAdapter.getItem(0).getTitle());
+		}
 	}
 
 	@Click(R.id.main_all_tasks)
 	void showAllTasks() {
-
 		mTagsAdapter.setChecked(-1);
 		setTagSelected(findViewById(R.id.main_all_tasks), true);
 		setTagSelected(findViewById(R.id.main_no_tag_tasks), false);
